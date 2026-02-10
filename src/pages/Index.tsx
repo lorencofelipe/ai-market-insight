@@ -1,13 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import { AppLayout } from "@/components/layout/AppLayout";
+import Dashboard from "./Dashboard";
+import Chat from "./Chat";
+import Frameworks from "./Frameworks";
+import Discovery from "./Discovery";
+import Sources from "./Sources";
+
+const pages: Record<string, React.ComponentType> = {
+  dashboard: Dashboard,
+  chat: Chat,
+  frameworks: Frameworks,
+  discovery: Discovery,
+  sources: Sources,
+};
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  // Force dark mode
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
+
+  const Page = pages[activeTab] || Dashboard;
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <AppLayout activeTab={activeTab} onTabChange={setActiveTab}>
+      <Page />
+    </AppLayout>
   );
 };
 

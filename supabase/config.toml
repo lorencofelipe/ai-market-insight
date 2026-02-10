@@ -1,0 +1,10 @@
+project_id = "cfbbfhkezvkjevpkbrfa"
+
+[functions.chat]
+verify_jwt = false
+
+[functions.framework-analysis]
+verify_jwt = false
+
+[functions.competitor-discovery]
+verify_jwt = false
