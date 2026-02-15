@@ -1,58 +1,91 @@
 
 
-# InsightForge AI — Phase 1 Core App
+# Apply CRM UI Kit Design System to InsightForge AI
 
 ## Overview
-A mobile-first, data-dense market research and competitive intelligence platform powered by real AI (Lovable AI Gateway). No auth required. Bloomberg-inspired dark UI with dense information panels, charts, and tables.
+Redesign the entire app to match the clean, light-themed CRM/SaaS UI Kit from the reference image. This replaces the current Bloomberg-style dark theme with a modern, polished SaaS aesthetic featuring soft blues, rounded elements, and clean typography.
 
----
+## Key Design Changes
 
-## Pages & Features
+### 1. Typography
+- Switch to **Lato** font family (the kit's primary font) for headings and body
+- Remove JetBrains Mono / Source Sans Pro / Source Code Pro
+- Clean heading hierarchy: H1-H6 with Lato Bold weights
+- Body text in Lato Regular 400/600
 
-### 1. Dashboard (Home)
-- **Market Pulse** — summary cards showing key metrics: active research projects, recent insights count, discovery coverage scores
-- **Recent Activity Feed** — timeline of latest AI-generated insights, competitor alerts, and framework analyses
-- **Quick Action Bar** — one-tap access to start a new analysis, run a framework, or ask a research question
-- **Trending Signals** — mini charts showing market trend indicators from recent analyses
+### 2. Color Palette (from the UI Kit)
+- **Primary**: Soft indigo-blue (~#6366F1 / indigo-500)
+- **Success/High**: Soft green (~#22C55E)
+- **Warning/Medium**: Amber/yellow (~#F59E0B)
+- **Danger/Low**: Soft red (~#EF4444)
+- **Background**: Clean white (#FFFFFF)
+- **Card**: White with subtle border (#F8FAFC)
+- **Muted text**: Slate gray (#94A3B8)
+- **Borders**: Very light gray (#E2E8F0)
+- Remove dark mode defaults; light mode as primary
 
-### 2. AI Research Chat
-- **Streaming AI Chat** — ask market research questions and get real-time streamed responses with source citations
-- **Context Modes** — toggle between general market research, competitive analysis, and industry deep-dive
-- **Citation Cards** — every AI response shows clickable source attributions with confidence scores
-- **Save to Project** — pin important insights from chat to a project for later reference
+### 3. Component Styling Updates
+- **Buttons**: Rounded pill-style (border-radius: full or large), solid primary fills, outline variants, soft color variants (green, red, yellow, blue)
+- **Cards**: White background, subtle shadow, light border, slightly rounded corners
+- **Badges/Tags**: Colorful pill badges with soft backgrounds (green, orange, red, blue, gray)
+- **Inputs**: Clean bordered inputs with subtle focus rings, label above
+- **Tables**: Light header background, clean row borders, comfortable padding
+- **Progress bars**: Thin colored bars
+- **Avatars**: Rounded with colored backgrounds
+- **Pagination**: Pill-style page numbers with active state highlight
 
-### 3. Strategic Frameworks
-- **Framework Library** — Porter's Five Forces, SWOT Analysis, TAM/SAM/SOM sizing templates
-- **Guided Wizard** — step-by-step input flow: define business question → set hypotheses → AI fills in the framework with evidence
-- **Visual Output** — each framework rendered as interactive, data-dense visual (e.g., Porter's as a force diagram, SWOT as a quadrant grid)
-- **Export-Ready** — formatted output suitable for copy/paste into presentations
+### 4. Files to Modify
 
-### 4. Competitive Discovery
-- **Competitor Table** — dense, sortable table of discovered competitors with key attributes (funding, headcount, pricing, positioning)
-- **AI-Powered Search** — enter a market/niche and AI discovers competitors beyond just Google results
-- **Coverage Score** — transparent metric showing estimated discovery completeness (e.g., "~65% coverage")
-- **Comparison Matrix** — side-by-side feature/pricing comparison grid for selected competitors
+**`src/index.css`** — Complete color variable overhaul:
+- Replace dark theme HSL values with light CRM kit palette
+- Update font imports (add Lato, remove Source families)
+- Update scrollbar styling for light theme
+- Adjust shadow variables for softer, more elevated feel
 
-### 5. Evidence & Audit Panel
-- **Source Library** — all sources referenced across analyses, with credibility scores and timestamps
-- **Confidence Indicators** — color-coded confidence levels (high/medium/low) on every insight
-- **Audit Trail** — for each insight, trace back through the reasoning chain: claim → evidence → source → confidence score
+**`tailwind.config.ts`** — Font family update:
+- Change sans to Lato stack
+- Adjust border-radius defaults (more rounded)
+- Update any custom color references
 
----
+**`src/components/ui/button.tsx`** — Rounded pill style:
+- Increase border-radius to `rounded-full` or `rounded-lg`
+- Add soft color variant buttons (success, warning, info)
 
-## Design System
-- **Dark mode by default** — Bloomberg/terminal-inspired dark theme with high-contrast data elements
-- **Dense layout** — compact cards, tight spacing, small but readable typography optimized for information density
-- **Color coding** — green/amber/red for confidence levels; blue accent for interactive elements
-- **Mobile-first** — bottom tab navigation, swipeable panels, collapsible sections for mobile; sidebar layout on desktop
-- **Charts** — Recharts for trend lines, bar charts, and radar diagrams within frameworks
+**`src/components/ui/badge.tsx`** — Pill badges:
+- Add color variants matching the kit (green, amber, red, blue)
+- Softer background colors with matching text
 
-## Navigation
-- **Mobile**: Bottom tab bar with 5 tabs — Dashboard, Chat, Frameworks, Discovery, Sources
-- **Desktop**: Collapsible sidebar with the same navigation items
+**`src/components/ui/card.tsx`** — Light card style:
+- White background, subtle shadow, softer border
 
-## AI Backend
-- **Lovable Cloud + Lovable AI Gateway** — edge functions calling Gemini 3 Flash for streaming chat, framework analysis, and competitor discovery
-- **Multiple edge functions**: one for chat streaming, one for framework generation, one for competitor discovery
-- **All responses include structured citations** via tool calling for auditability
+**`src/components/ui/input.tsx`** — Clean input styling:
+- Lighter background, cleaner border, softer focus state
+
+**`src/components/layout/BottomTabs.tsx`** — Light navigation bar:
+- White/light background, indigo active state
+
+**`src/components/layout/DesktopSidebar.tsx`** — Light sidebar:
+- White sidebar, soft active highlight, clean typography
+
+**`src/pages/Dashboard.tsx`** — Update chart colors, card styles:
+- Use indigo/blue tones for charts instead of Bloomberg blue
+- Lighter card backgrounds, cleaner metric presentation
+
+**`src/pages/Chat.tsx`** — Clean chat bubbles:
+- White cards, soft primary tint for user messages
+
+**`src/pages/Frameworks.tsx`** — Softer SWOT colors:
+- Match the UI kit's green/red/blue/amber palette
+
+**`src/pages/Discovery.tsx`** — Clean table design:
+- Light header, comfortable row spacing
+
+**`src/pages/Sources.tsx`** — Clean audit table:
+- Same light table treatment
+
+### 5. Summary of Visual Transformation
+- From: Dark, dense, Bloomberg terminal aesthetic
+- To: Clean, bright, modern SaaS dashboard with soft colors, rounded elements, and generous whitespace
+- Typography shifts from monospace-heavy to clean sans-serif (Lato)
+- Color palette shifts from amber/gold primary to indigo/blue primary with colorful accent badges
 
