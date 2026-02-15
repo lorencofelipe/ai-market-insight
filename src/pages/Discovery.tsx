@@ -67,10 +67,10 @@ export default function Discovery() {
   };
 
   return (
-    <div className="p-4 space-y-4 max-w-7xl mx-auto">
+    <div className="p-5 space-y-5 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-lg font-bold font-mono tracking-tight">Competitive Discovery</h1>
-        <p className="text-xs text-muted-foreground">AI-powered competitor identification & analysis</p>
+        <h1 className="text-xl font-bold tracking-tight">Competitive Discovery</h1>
+        <p className="text-sm text-muted-foreground">AI-powered competitor identification & analysis</p>
       </div>
 
       <form onSubmit={(e) => { e.preventDefault(); discover(); }} className="flex gap-2">
@@ -78,59 +78,59 @@ export default function Discovery() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Enter a market or niche (e.g., 'B2B SaaS analytics')"
-          className="text-xs bg-muted/50"
+          className="text-sm"
         />
-        <Button type="submit" size="sm" disabled={loading} className="text-xs shrink-0">
+        <Button type="submit" size="sm" disabled={loading} className="shrink-0">
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
         </Button>
       </form>
 
       {/* Coverage Score */}
-      <Card className="border-border bg-card">
-        <CardContent className="p-3 flex items-center gap-3">
+      <Card>
+        <CardContent className="p-4 flex items-center gap-4">
           <div className="flex-1">
-            <div className="text-2xs text-muted-foreground mb-1">Discovery Coverage</div>
-            <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+            <div className="text-xs text-muted-foreground mb-1.5 font-semibold">Discovery Coverage</div>
+            <div className="h-2 bg-muted rounded-full overflow-hidden">
               <div
                 className="h-full bg-primary rounded-full transition-all"
                 style={{ width: `${coverage}%` }}
               />
             </div>
           </div>
-          <span className="text-sm font-mono font-bold text-primary">~{coverage}%</span>
+          <span className="text-lg font-bold text-primary">~{coverage}%</span>
         </CardContent>
       </Card>
 
       {/* Competitor Table */}
-      <Card className="border-border bg-card overflow-hidden">
-        <CardHeader className="p-3 pb-0">
-          <CardTitle className="text-xs font-mono font-semibold flex items-center gap-2">
-            <ArrowUpDown className="h-3 w-3" />
+      <Card className="overflow-hidden">
+        <CardHeader className="p-4 pb-0">
+          <CardTitle className="text-sm font-semibold flex items-center gap-2">
+            <ArrowUpDown className="h-3.5 w-3.5" />
             {competitors.length} Competitors Found
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
             <TableHeader>
-              <TableRow className="border-border hover:bg-transparent">
-                <TableHead className="text-2xs font-mono h-8 px-3">Company</TableHead>
-                <TableHead className="text-2xs font-mono h-8 px-3 hidden sm:table-cell">Funding</TableHead>
-                <TableHead className="text-2xs font-mono h-8 px-3 hidden md:table-cell">Headcount</TableHead>
-                <TableHead className="text-2xs font-mono h-8 px-3">Pricing</TableHead>
-                <TableHead className="text-2xs font-mono h-8 px-3 hidden lg:table-cell">Positioning</TableHead>
-                <TableHead className="text-2xs font-mono h-8 px-3 w-16">Conf.</TableHead>
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="text-xs h-10 px-4">Company</TableHead>
+                <TableHead className="text-xs h-10 px-4 hidden sm:table-cell">Funding</TableHead>
+                <TableHead className="text-xs h-10 px-4 hidden md:table-cell">Headcount</TableHead>
+                <TableHead className="text-xs h-10 px-4">Pricing</TableHead>
+                <TableHead className="text-xs h-10 px-4 hidden lg:table-cell">Positioning</TableHead>
+                <TableHead className="text-xs h-10 px-4 w-20">Conf.</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {competitors.map((c, i) => (
-                <TableRow key={i} className="border-border">
-                  <TableCell className="text-xs font-medium px-3 py-2">{c.name}</TableCell>
-                  <TableCell className="text-2xs text-muted-foreground px-3 py-2 hidden sm:table-cell">{c.funding}</TableCell>
-                  <TableCell className="text-2xs text-muted-foreground px-3 py-2 hidden md:table-cell">{c.headcount}</TableCell>
-                  <TableCell className="text-2xs font-mono px-3 py-2">{c.pricing}</TableCell>
-                  <TableCell className="text-2xs text-muted-foreground px-3 py-2 hidden lg:table-cell">{c.positioning}</TableCell>
-                  <TableCell className="px-3 py-2">
-                    <span className={`text-2xs px-1.5 py-0.5 rounded font-medium ${confStyles[c.confidence]}`}>
+                <TableRow key={i}>
+                  <TableCell className="text-sm font-medium px-4 py-3">{c.name}</TableCell>
+                  <TableCell className="text-xs text-muted-foreground px-4 py-3 hidden sm:table-cell">{c.funding}</TableCell>
+                  <TableCell className="text-xs text-muted-foreground px-4 py-3 hidden md:table-cell">{c.headcount}</TableCell>
+                  <TableCell className="text-xs px-4 py-3">{c.pricing}</TableCell>
+                  <TableCell className="text-xs text-muted-foreground px-4 py-3 hidden lg:table-cell">{c.positioning}</TableCell>
+                  <TableCell className="px-4 py-3">
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${confStyles[c.confidence]}`}>
                       {c.confidence}
                     </span>
                   </TableCell>

@@ -30,7 +30,6 @@ const frameworks = [
   },
 ];
 
-// Mock SWOT result for demo
 const mockSwotResult = {
   strengths: ["Strong brand recognition", "Proprietary technology", "Experienced leadership team"],
   weaknesses: ["High customer acquisition cost", "Limited international presence", "Dependency on single revenue stream"],
@@ -74,7 +73,6 @@ export default function Frameworks() {
       setResult(data.result);
     } catch (e: any) {
       toast.error(e.message);
-      // Fallback to mock for demo
       if (selected === "swot") setResult(mockSwotResult);
     } finally {
       setLoading(false);
@@ -84,48 +82,48 @@ export default function Frameworks() {
   if (selected) {
     const fw = frameworks.find((f) => f.id === selected)!;
     return (
-      <div className="p-4 space-y-4 max-w-2xl mx-auto">
-        <button onClick={() => { setSelected(null); setResult(null); }} className="text-xs text-primary hover:underline">
+      <div className="p-5 space-y-5 max-w-2xl mx-auto">
+        <button onClick={() => { setSelected(null); setResult(null); }} className="text-sm text-primary font-semibold hover:underline">
           ← Back to frameworks
         </button>
-        <h1 className="text-lg font-bold font-mono">{fw.name}</h1>
-        <p className="text-xs text-muted-foreground">{fw.description}</p>
+        <h1 className="text-xl font-bold">{fw.name}</h1>
+        <p className="text-sm text-muted-foreground">{fw.description}</p>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {fw.fields.map((field) => (
             <div key={field}>
-              <label className="text-2xs font-medium text-muted-foreground mb-1 block">{field}</label>
+              <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">{field}</label>
               <Input
-                className="text-xs bg-muted/50"
+                className="text-sm"
                 placeholder={`Enter ${field.toLowerCase()}...`}
                 value={inputs[field] || ""}
                 onChange={(e) => setInputs((prev) => ({ ...prev, [field]: e.target.value }))}
               />
             </div>
           ))}
-          <Button onClick={runFramework} disabled={loading} className="w-full text-xs">
+          <Button onClick={runFramework} disabled={loading} className="w-full">
             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ArrowRight className="h-4 w-4 mr-2" />}
             Run Analysis
           </Button>
         </div>
 
         {result && selected === "swot" && (
-          <div className="grid grid-cols-2 gap-2 mt-4">
+          <div className="grid grid-cols-2 gap-3 mt-5">
             {(["strengths", "weaknesses", "opportunities", "threats"] as const).map((q) => {
               const colors: Record<string, string> = {
-                strengths: "border-confidence-high/30 bg-confidence-high/5",
-                weaknesses: "border-confidence-low/30 bg-confidence-low/5",
-                opportunities: "border-primary/30 bg-primary/5",
-                threats: "border-signal-neutral/30 bg-signal-neutral/5",
+                strengths: "border-[hsl(142_71%_45%/0.3)] bg-[hsl(142_71%_45%/0.05)]",
+                weaknesses: "border-[hsl(0_84%_60%/0.3)] bg-[hsl(0_84%_60%/0.05)]",
+                opportunities: "border-[hsl(239_84%_67%/0.3)] bg-[hsl(239_84%_67%/0.05)]",
+                threats: "border-[hsl(38_92%_50%/0.3)] bg-[hsl(38_92%_50%/0.05)]",
               };
               return (
                 <Card key={q} className={cn("border", colors[q])}>
-                  <CardHeader className="p-2 pb-1">
-                    <CardTitle className="text-2xs font-mono uppercase tracking-wider">{q}</CardTitle>
+                  <CardHeader className="p-3 pb-1">
+                    <CardTitle className="text-xs font-bold uppercase tracking-wider">{q}</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-2 pt-0 space-y-1">
+                  <CardContent className="p-3 pt-0 space-y-1.5">
                     {(result[q] || []).map((item: string, i: number) => (
-                      <p key={i} className="text-2xs text-foreground/80">• {item}</p>
+                      <p key={i} className="text-xs text-foreground/80">• {item}</p>
                     ))}
                   </CardContent>
                 </Card>
@@ -135,8 +133,8 @@ export default function Frameworks() {
         )}
 
         {result && selected !== "swot" && (
-          <Card className="border-border bg-card mt-4">
-            <CardContent className="p-3 text-xs whitespace-pre-wrap">
+          <Card className="mt-5">
+            <CardContent className="p-4 text-sm whitespace-pre-wrap">
               {typeof result === "string" ? result : JSON.stringify(result, null, 2)}
             </CardContent>
           </Card>
@@ -146,28 +144,28 @@ export default function Frameworks() {
   }
 
   return (
-    <div className="p-4 space-y-4 max-w-2xl mx-auto">
+    <div className="p-5 space-y-5 max-w-2xl mx-auto">
       <div>
-        <h1 className="text-lg font-bold font-mono tracking-tight">Strategic Frameworks</h1>
-        <p className="text-xs text-muted-foreground">AI-powered strategic analysis tools</p>
+        <h1 className="text-xl font-bold tracking-tight">Strategic Frameworks</h1>
+        <p className="text-sm text-muted-foreground">AI-powered strategic analysis tools</p>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         {frameworks.map((fw) => {
           const Icon = fw.icon;
           return (
             <Card
               key={fw.id}
-              className="border-border bg-card hover:bg-muted/50 cursor-pointer transition-colors"
+              className="hover:shadow-md cursor-pointer transition-all"
               onClick={() => setSelected(fw.id)}
             >
-              <CardContent className="p-3 flex items-center gap-3">
-                <div className="h-9 w-9 rounded-md bg-primary/10 flex items-center justify-center shrink-0">
-                  <Icon className="h-4 w-4 text-primary" />
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Icon className="h-5 w-5 text-primary" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium">{fw.name}</div>
-                  <div className="text-2xs text-muted-foreground">{fw.description}</div>
+                  <div className="text-sm font-semibold">{fw.name}</div>
+                  <div className="text-xs text-muted-foreground">{fw.description}</div>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
               </CardContent>

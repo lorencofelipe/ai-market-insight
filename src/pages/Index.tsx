@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Dashboard from "./Dashboard";
 import Chat from "./Chat";
@@ -16,11 +16,6 @@ const pages: Record<string, React.ComponentType> = {
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
-
-  // Force dark mode
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
 
   const Page = pages[activeTab] || Dashboard;
 
