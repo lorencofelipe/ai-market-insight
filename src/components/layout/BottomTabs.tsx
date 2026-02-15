@@ -33,7 +33,7 @@ export function BottomTabs({ activeTab, onTabChange }: BottomTabsProps) {
               )}
             >
               <Icon className="h-4 w-4" />
-              <span className="text-2xs font-medium">{tab.label}</span>
+              <span className="text-2xs font-semibold">{tab.label}</span>
             </button>
           );
         })}

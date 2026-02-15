@@ -25,16 +25,18 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
         collapsed ? "w-16" : "w-56"
       )}
     >
-      <div className="flex items-center gap-2 px-4 h-14 border-b border-border">
-        <Zap className="h-5 w-5 text-primary shrink-0" />
+      <div className="flex items-center gap-2.5 px-4 h-14 border-b border-border">
+        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
+          <Zap className="h-4 w-4 text-primary-foreground" />
+        </div>
         {!collapsed && (
-          <span className="font-mono font-bold text-sm tracking-tight text-foreground">
+          <span className="font-bold text-sm tracking-tight text-foreground">
             InsightForge
           </span>
         )}
       </div>
 
-      <nav className="flex-1 py-2 space-y-0.5 px-2">
+      <nav className="flex-1 py-3 space-y-1 px-2">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -43,9 +45,9 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={cn(
-                "flex items-center gap-3 w-full px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                 isActive
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               )}
             >
@@ -58,7 +60,7 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
 
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="flex items-center justify-center h-10 border-t border-border text-muted-foreground hover:text-foreground text-xs"
+        className="flex items-center justify-center h-10 border-t border-border text-muted-foreground hover:text-foreground text-xs transition-colors"
       >
         {collapsed ? "→" : "← Collapse"}
       </button>

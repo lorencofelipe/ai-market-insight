@@ -61,9 +61,9 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-full max-w-3xl mx-auto">
       {/* Header */}
-      <div className="p-4 pb-2">
-        <h1 className="text-lg font-bold font-mono tracking-tight">AI Research</h1>
-        <div className="flex gap-1.5 mt-2">
+      <div className="p-5 pb-3">
+        <h1 className="text-xl font-bold tracking-tight">AI Research</h1>
+        <div className="flex gap-2 mt-3">
           {contextModes.map((m) => {
             const Icon = m.icon;
             return (
@@ -71,13 +71,13 @@ export default function Chat() {
                 key={m.id}
                 onClick={() => setMode(m.id)}
                 className={cn(
-                  "flex items-center gap-1.5 px-2.5 py-1 rounded-md text-2xs font-medium transition-colors",
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all",
                   mode === m.id
-                    ? "bg-primary/15 text-primary border border-primary/30"
+                    ? "bg-primary text-primary-foreground shadow-sm"
                     : "bg-muted text-muted-foreground hover:text-foreground"
                 )}
               >
-                <Icon className="h-3 w-3" />
+                <Icon className="h-3.5 w-3.5" />
                 {m.label}
               </button>
             );
@@ -86,12 +86,12 @@ export default function Chat() {
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 space-y-3 pb-4">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 space-y-3 pb-4">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-3">
               <p className="text-sm text-muted-foreground">Ask a market research question</p>
-              <div className="flex flex-wrap gap-1.5 justify-center max-w-sm">
+              <div className="flex flex-wrap gap-2 justify-center max-w-sm">
                 {[
                   "What's the TAM for AI-powered CRM?",
                   "Top competitors in EdTech SaaS",
@@ -100,7 +100,7 @@ export default function Chat() {
                   <button
                     key={q}
                     onClick={() => { setInput(q); }}
-                    className="text-2xs px-2 py-1 rounded bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-xs px-3 py-1.5 rounded-full bg-muted text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {q}
                   </button>
@@ -114,14 +114,14 @@ export default function Chat() {
           <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
             <Card
               className={cn(
-                "max-w-[85%] border-border",
-                m.role === "user" ? "bg-primary/10" : "bg-card"
+                "max-w-[85%]",
+                m.role === "user" ? "bg-primary text-primary-foreground border-primary" : "bg-card"
               )}
             >
-              <CardContent className="p-2.5 text-xs leading-relaxed whitespace-pre-wrap">
+              <CardContent className="p-3 text-sm leading-relaxed whitespace-pre-wrap">
                 {m.content}
                 {isLoading && i === messages.length - 1 && m.role === "assistant" && (
-                  <span className="inline-block w-1.5 h-3.5 bg-primary ml-0.5 animate-pulse-glow" />
+                  <span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse-glow rounded-sm" />
                 )}
               </CardContent>
             </Card>
@@ -130,7 +130,7 @@ export default function Chat() {
       </div>
 
       {/* Input */}
-      <div className="p-4 pt-2 border-t border-border">
+      <div className="p-5 pt-3 border-t border-border">
         <form
           onSubmit={(e) => { e.preventDefault(); send(); }}
           className="flex gap-2"
@@ -139,10 +139,10 @@ export default function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about markets, competitors, trends..."
-            className="text-xs bg-muted/50"
+            className="text-sm"
             disabled={isLoading}
           />
-          <Button size="icon" type="submit" disabled={isLoading || !input.trim()}>
+          <Button size="icon" type="submit" disabled={isLoading || !input.trim()} className="rounded-lg">
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           </Button>
         </form>
