@@ -6,6 +6,7 @@ import { Send, Loader2, Globe, Swords, TrendingUp } from "lucide-react";
 import { streamChat, type Msg } from "@/lib/stream-chat";
 import { cn } from "@/lib/utils";
 import { TimelineResponse } from "@/components/chat/TimelineResponse";
+import { SourceCitation, type Source } from "@/components/chat/SourceCitation";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -25,7 +26,7 @@ const contextModes = [
 ];
 
 export default function Chat() {
-  const [messages, setMessages] = useState<Msg[]>([]);
+  const [messages, setMessages] = useState<(Msg & { sources?: Source[] })[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("general");
@@ -144,6 +145,9 @@ export default function Chat() {
                     content={m.content}
                     isStreaming={isLoading && i === messages.length - 1}
                   />
+                  {!isLoading && m.sources && m.sources.length > 0 && (
+                    <SourceCitation sources={m.sources} />
+                  )}
                 </CardContent>
               </Card>
             )}
