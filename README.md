@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# AI Market Insight
 
-## Project info
+AI-powered market research and competitive intelligence platform.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Architecture
 
-## How can I edit this code?
+This project follows a **3-Layer Architecture** (see [Gemini.md](Gemini.md)):
 
-There are several ways of editing your application.
+| Layer | Purpose | Location |
+|-------|---------|----------|
+| **Directives** | SOPs in Markdown — what to do | `directives/` |
+| **Orchestration** | AI decision-making — routing & error handling | (AI agent) |
+| **Execution** | Deterministic Python scripts — doing the work | `execution/` |
 
-**Use Lovable**
+## Project Structure
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+```
+ai-market-insight/
+├── Gemini.md               # Architecture specification
+├── directives/             # SOPs (Standard Operating Procedures)
+│   ├── chat_analysis.md
+│   ├── competitor_discovery.md
+│   ├── framework_analysis.md
+│   └── scrape_website.md
+├── execution/              # Python scripts (deterministic tools)
+│   ├── requirements.txt
+│   ├── chat_analysis.py
+│   ├── competitor_discovery.py
+│   └── framework_analysis.py
+├── .tmp/                   # Intermediate files (never committed)
+├── frontend/               # React/Vite web application
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+├── supabase/               # Supabase Edge Functions
+│   └── functions/
+└── .env                    # API keys and environment variables
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+## Quick Start
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### Frontend
+```bash
+cd frontend
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Execution Scripts
+```bash
+pip install -r execution/requirements.txt
+python execution/competitor_discovery.py --query "B2B SaaS analytics"
+python execution/framework_analysis.py --framework swot --inputs '{"Company/Product": "Slack", "Market Context": "Enterprise communication"}'
+python execution/chat_analysis.py --query "What is the cloud infrastructure market size?" --mode industry
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Key Principles
 
-**Use GitHub Codespaces**
+1. **Directives are living documents** — Updated as the system learns
+2. **Execution is deterministic** — Python scripts handle all API calls and data processing
+3. **Self-annealing** — Errors are learning opportunities; fix → update tool → update directive
+4. **Deliverables live in the cloud** — Google Sheets, Slides, etc.
+5. **Local files are for processing** — Everything in `.tmp/` can be regenerated
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Technologies
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn-ui
+- **Backend**: Supabase Edge Functions
+- **Execution**: Python 3.10+
+- **AI**: Gemini via Lovable AI Gateway
