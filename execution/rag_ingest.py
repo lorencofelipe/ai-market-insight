@@ -137,6 +137,44 @@ def chunk_chat_analysis(data: dict, source_file: str) -> list[dict]:
         "chunk_index": 0,
     }]
 
+def chunk_scrape_website(data: dict, source_file: str) -> list[dict]:
+    """Naive chunking for markdown content (approx 2000 chars per chunk)."""
+    chunks = []
+    markdown = data.get("markdown", "")
+    url = data.get("url", "unknown")
+    page_type = data.get("page_type", "unknown")
+    
+    if not markdown:
+        return []
+        
+    chunk_size = 2000
+    overlap = 200
+    
+    start = 0
+    chunk_index = 0
+    while start < len(markdown):
+        end = start + chunk_size
+        text_chunk = markdown[start:end]
+        
+        content = (
+            f"Source URL: {url}\n"
+            f"Page Type: {page_type}\n"
+            f"Content:\n{text_chunk}"
+        )
+        
+        chunks.append({
+            "content": content,
+            "source": source_file,
+            "source_type": "scrape_website",
+            "metadata": {"url": url, "page_type": page_type},
+            "chunk_index": chunk_index,
+        })
+        
+        start = end - overlap
+        chunk_index += 1
+        
+    return chunks
+
 
 # ---------------------------------------------------------------------------
 # Detect source type from JSON content
@@ -150,6 +188,8 @@ def detect_source_type(data: dict) -> str:
         return "framework_analysis"
     if "response" in data and "mode" in data:
         return "chat_analysis"
+    if "markdown" in data and "url" in data:
+        return "scrape_website"
     return "unknown"
 
 
@@ -161,6 +201,8 @@ def chunk_data(data: dict, source_file: str, source_type: str) -> list[dict]:
         return chunk_framework_analysis(data, source_file)
     elif source_type == "chat_analysis":
         return chunk_chat_analysis(data, source_file)
+    elif source_type == "scrape_website":
+        return chunk_scrape_website(data, source_file)
     else:
         # Generic: treat entire JSON as one chunk
         return [{
