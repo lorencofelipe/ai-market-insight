@@ -63,32 +63,44 @@ interface TimelineSection {
   confidence: "high" | "medium" | "low" | null;
 }
 
-function parseSections(text: string): TimelineSection[] {
-  // Split by markdown headers (## or ###)
-  const parts = text.split(/^(#{1,3})\s+(.+)$/m);
+/** Strip leftover markdown symbols so text renders clean */
+function cleanMarkdown(text: string): string {
+  return text
+    .replace(/^#{1,4}\s+/gm, "") // remove header markers
+    .replace(/\*\*\*(.*?)\*\*\*/g, "$1") // bold-italic → plain
+    .replace(/\*\*(.*?)\*\*/g, "$1") // bold → plain
+    .replace(/\*(.*?)\*/g, "$1") // italic → plain
+    .replace(/^[-*]\s+/gm, "• ") // normalize bullets
+    .replace(/\n{3,}/g, "\n\n") // collapse extra newlines
+    .trim();
+}
 
-  if (parts.length <= 1) {
-    // No headers found — treat as single block
-    return [{ title: "Resposta", content: text.trim(), confidence: detectConfidence(text) }];
+function parseSections(text: string): TimelineSection[] {
+  const headerRegex = /^#{1,3}\s+(.+)$/gm;
+  const matches = [...text.matchAll(headerRegex)];
+
+  if (matches.length === 0) {
+    const cleaned = cleanMarkdown(text);
+    return [{ title: "Resposta", content: cleaned, confidence: detectConfidence(cleaned) }];
   }
 
   const sections: TimelineSection[] = [];
-  let i = 0;
 
   // Content before first header
-  const preamble = parts[0].trim();
+  const preamble = text.slice(0, matches[0].index).trim();
   if (preamble) {
-    sections.push({ title: "Resumo", content: preamble, confidence: detectConfidence(preamble) });
+    const cleaned = cleanMarkdown(preamble);
+    sections.push({ title: "Resumo", content: cleaned, confidence: detectConfidence(cleaned) });
   }
 
-  i = 1;
-  while (i < parts.length) {
-    // parts[i] = "##", parts[i+1] = title, parts[i+2] = content until next header
-    const title = parts[i + 1]?.trim() || "Seção";
-    const content = parts[i + 2]?.trim() || "";
-    sections.push({ title, content, confidence: detectConfidence(content) });
-    i += 3;
-  }
+  matches.forEach((match, idx) => {
+    const title = match[1].replace(/\*+/g, "").trim();
+    const start = (match.index ?? 0) + match[0].length;
+    const end = idx + 1 < matches.length ? matches[idx + 1].index : text.length;
+    const raw = text.slice(start, end).trim();
+    const cleaned = cleanMarkdown(raw);
+    sections.push({ title, content: cleaned, confidence: detectConfidence(cleaned) });
+  });
 
   return sections;
 }
@@ -102,10 +114,9 @@ export function TimelineResponse({ content, isStreaming }: TimelineResponseProps
   const sections = useMemo(() => parseSections(content), [content]);
 
   if (sections.length <= 1 && sections[0]?.content.length < 80) {
-    // Short response — render inline
     return (
-      <div className="text-sm leading-relaxed prose prose-sm max-w-none prose-headings:text-foreground prose-p:text-foreground/85">
-        <ReactMarkdown>{content}</ReactMarkdown>
+      <div className="text-[14px] leading-7 text-foreground/85">
+        {cleanMarkdown(content)}
         {isStreaming && (
           <span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse rounded-sm" />
         )}
@@ -114,27 +125,27 @@ export function TimelineResponse({ content, isStreaming }: TimelineResponseProps
   }
 
   return (
-    <div className="relative space-y-0">
+    <div className="relative space-y-1">
       {sections.map((section, idx) => {
         const Icon = getIconForTitle(section.title);
         const isLast = idx === sections.length - 1;
 
         return (
-          <div key={idx} className="relative flex gap-3">
+          <div key={idx} className="relative flex gap-4">
             {/* Timeline connector */}
-            <div className="flex flex-col items-center pt-1">
-              <div className="h-7 w-7 rounded-full bg-primary/10 border-2 border-primary/40 flex items-center justify-center shrink-0 z-10">
-                <Icon className="h-3.5 w-3.5 text-primary" />
+            <div className="flex flex-col items-center pt-0.5">
+              <div className="h-8 w-8 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center shrink-0 z-10">
+                <Icon className="h-4 w-4 text-primary" />
               </div>
               {!isLast && (
-                <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/30 to-primary/10 min-h-[16px]" />
+                <div className="w-0.5 flex-1 bg-gradient-to-b from-primary/25 to-primary/5 min-h-[24px]" />
               )}
             </div>
 
             {/* Content */}
-            <div className={cn("flex-1 pb-5", isLast && "pb-1")}>
-              <div className="flex items-center gap-2 mb-1.5">
-                <h4 className="text-sm font-bold text-foreground leading-tight">
+            <div className={cn("flex-1 pt-0.5", isLast ? "pb-1" : "pb-6")}>
+              <div className="flex items-center gap-2.5 mb-2">
+                <h4 className="text-[15px] font-bold text-foreground leading-snug">
                   {section.title}
                 </h4>
                 {section.confidence && (
@@ -149,8 +160,8 @@ export function TimelineResponse({ content, isStreaming }: TimelineResponseProps
                   </Badge>
                 )}
               </div>
-              <div className="text-sm leading-relaxed prose prose-sm max-w-none prose-headings:text-foreground prose-headings:text-xs prose-p:text-foreground/80 prose-li:text-foreground/80 prose-strong:text-foreground prose-ul:my-1 prose-li:my-0">
-                <ReactMarkdown>{section.content}</ReactMarkdown>
+              <div className="text-[13.5px] leading-7 text-foreground/75 whitespace-pre-line">
+                {section.content}
               </div>
               {isStreaming && isLast && (
                 <span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse rounded-sm" />
