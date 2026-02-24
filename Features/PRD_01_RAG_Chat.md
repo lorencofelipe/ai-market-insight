@@ -43,8 +43,9 @@ graph LR
 
 ### Should Have
 - Hybrid search (semântico + keyword BM25)
-- Reranking com cross-encoder
+- Reranking com MMR (Maximal Marginal Relevance) — gratuito
 - Indicador de confiança por resposta (baseado em similarity score)
+- Cache de respostas por hash da query (evita chamadas repetidas ao LLM)
 
 ### Could Have
 - Upload de PDFs pelo usuário (relatórios de mercado)
@@ -74,11 +75,14 @@ graph LR
 
 **Dependências** (adicionar ao `requirements.txt`):
 ```
-sentence-transformers
-pgvector
-supabase
-tiktoken
+sentence-transformers   # embeddings locais, gratuito
+pgvector                # client pgvector
+supabase                # já no stack
+tiktoken                # contagem de tokens
 ```
+
+> [!NOTE]
+> Nenhuma nova API paga necessária. Todos os componentes rodam localmente ou usam infra já existente (Supabase).
 
 ### Backend — Supabase
 - Extensão `pgvector` habilitada
@@ -93,16 +97,31 @@ tiktoken
 
 ---
 
-## 5. Modelo de Embeddings
+## 5. Stack Zero-Cost
 
-| Modelo | Dimensões | Prós | Contras |
-|--------|-----------|------|---------|
-| `text-embedding-ada-002` (OpenAI) | 1536 | Alta qualidade, multilíngue | Pago, depende de API |
-| `all-MiniLM-L6-v2` | 384 | Grátis, rápido, local | Qualidade inferior |
-| `bge-large-en-v1.5` | 1024 | SOTA performance | Apenas inglês |
-| **`e5-large-v2`** ⭐ | 1024 | Alta qualidade, multilíngue | Requer GPU para batch |
+| Componente | Solução | Custo |
+|------------|---------|-------|
+| **Embeddings** | `bge-small-en-v1.5` (sentence-transformers) — local | $0 |
+| **Vector Store** | Supabase pgvector — já no stack | $0 |
+| **Reranking** | MMR (Maximal Marginal Relevance) — nativo LangChain | $0 |
+| **Cache** | Supabase tabela `query_cache` com hash MD5 | $0 |
+| **LLM** | Lovable Gateway — já em uso | Já pago |
 
-**Recomendação**: Começar com `text-embedding-ada-002` pela simplicidade, migrar para modelo local quando volume justificar.
+**Modelo de embedding escolhido: `bge-small-en-v1.5`**
+- Qualidade próxima ao OpenAI ada-002
+- 384 dimensões — leve e rápido
+- Roda 100% local, sem API externa
+- Suporta inglês e português
+
+### Cache de Respostas
+Antes de chamar o LLM, verificar se a query (ou similar) já foi respondida:
+```python
+import hashlib
+query_hash = hashlib.md5(query.strip().lower().encode()).hexdigest()
+# Busca no Supabase query_cache → retorna se hit
+# Salva no cache após nova resposta gerada
+```
+Reduz chamadas ao LLM em ~30–40% em uso regular.
 
 ---
 
@@ -122,10 +141,10 @@ tiktoken
 
 | Risco | Severidade | Mitigação |
 |-------|-----------|-----------|
-| Base de dados vazia no início | Alta | Seed com dados dos scripts existentes + relatórios públicos |
-| Latência alta com reranking | Média | Cache de embeddings, limitar reranking a top-20 |
-| Custo de API de embeddings | Média | Batch processing, cache de embeddings já computados |
+| Base de dados vazia no início | Alta | Seed automático com outputs dos scripts existentes |
+| Latência alta (embedding local) | Média | Cache de embeddings computados, batch processing no ingest |
 | Dados desatualizados | Média | Metadata com timestamp, alertar quando dado >30 dias |
+| Qualidade dos embeddings locais | Baixa | `bge-small-en-v1.5` tem qualidade suficiente para market intel |
 
 ---
 
@@ -143,8 +162,11 @@ tiktoken
 
 ## 9. Critérios de Aceite
 
+- [ ] Embeddings gerados localmente com `bge-small-en-v1.5` — sem API paga
 - [ ] Dados dos scripts `competitor_discovery.py` e `framework_analysis.py` indexados no vector store
+- [ ] Cache de respostas funcional (hit retorna sem chamar o LLM)
 - [ ] Chat retorna respostas com pelo menos 1 citação quando dados relevantes existem
-- [ ] Fallback para resposta sem RAG quando similarity score < threshold
+- [ ] Fallback graciosa para resposta sem RAG quando similarity score < threshold
 - [ ] Latência total < 3s para 95% das queries
 - [ ] Badge de confiança visível no frontend
+- [ ] Custo adicional de infra: **$0**
