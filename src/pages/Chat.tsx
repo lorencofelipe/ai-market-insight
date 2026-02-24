@@ -6,6 +6,16 @@ import { Send, Loader2, Globe, Swords, TrendingUp } from "lucide-react";
 import { streamChat, type Msg } from "@/lib/stream-chat";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const contextModes = [
   { id: "general", label: "Market Research", icon: Globe },
@@ -18,6 +28,7 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState("general");
+  const [pendingMode, setPendingMode] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,7 +80,14 @@ export default function Chat() {
             return (
               <button
                 key={m.id}
-                onClick={() => setMode(m.id)}
+                onClick={() => {
+                  if (m.id === mode) return;
+                  if (messages.length > 0) {
+                    setPendingMode(m.id);
+                  } else {
+                    setMode(m.id);
+                  }
+                }}
                 className={cn(
                   "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all",
                   mode === m.id
@@ -147,6 +165,31 @@ export default function Chat() {
           </Button>
         </form>
       </div>
+      {/* Confirmation dialog */}
+      <AlertDialog open={!!pendingMode} onOpenChange={(open) => !open && setPendingMode(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Fechar conversa atual?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Ao trocar de modo, a conversa atual será encerrada. Deseja continuar?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (pendingMode) {
+                  setMessages([]);
+                  setMode(pendingMode);
+                  setPendingMode(null);
+                }
+              }}
+            >
+              Sim, fechar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
