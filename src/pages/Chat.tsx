@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Send, Loader2, Globe, Swords, TrendingUp } from "lucide-react";
 import { streamChat, type Msg } from "@/lib/stream-chat";
 import { cn } from "@/lib/utils";
+import { TimelineResponse } from "@/components/chat/TimelineResponse";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -130,19 +131,22 @@ export default function Chat() {
 
         {messages.map((m, i) => (
           <div key={i} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-            <Card
-              className={cn(
-                "max-w-[85%]",
-                m.role === "user" ? "bg-primary text-primary-foreground border-primary" : "bg-card"
-              )}
-            >
-              <CardContent className="p-3 text-sm leading-relaxed whitespace-pre-wrap">
-                {m.content}
-                {isLoading && i === messages.length - 1 && m.role === "assistant" && (
-                  <span className="inline-block w-1.5 h-4 bg-primary ml-0.5 animate-pulse-glow rounded-sm" />
-                )}
-              </CardContent>
-            </Card>
+            {m.role === "user" ? (
+              <Card className="max-w-[85%] bg-primary text-primary-foreground border-primary">
+                <CardContent className="p-3 text-sm leading-relaxed whitespace-pre-wrap">
+                  {m.content}
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="max-w-[90%] bg-card border-border/60 shadow-sm">
+                <CardContent className="p-4">
+                  <TimelineResponse
+                    content={m.content}
+                    isStreaming={isLoading && i === messages.length - 1}
+                  />
+                </CardContent>
+              </Card>
+            )}
           </div>
         ))}
       </div>
