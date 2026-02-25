@@ -1,4 +1,4 @@
-import { LayoutDashboard, MessageSquare, Layers, Search, FileCheck, Zap } from "lucide-react";
+import { MessageSquare, Layers, Search, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -6,7 +6,6 @@ const tabs = [
   { id: "chat", label: "AI Research", icon: MessageSquare },
   { id: "frameworks", label: "Frameworks", icon: Layers },
   { id: "discovery", label: "Discovery", icon: Search },
-  { id: "sources", label: "Sources", icon: FileCheck },
 ];
 
 interface DesktopSidebarProps {
