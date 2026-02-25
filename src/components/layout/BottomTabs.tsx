@@ -2,7 +2,6 @@ import { LayoutDashboard, MessageSquare, Layers, Search, FileCheck } from "lucid
 import { cn } from "@/lib/utils";
 
 const tabs = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { id: "chat", label: "Chat", icon: MessageSquare },
   { id: "frameworks", label: "Frameworks", icon: Layers },
   { id: "discovery", label: "Discovery", icon: Search },
