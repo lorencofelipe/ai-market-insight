@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
-import Dashboard from "./Dashboard";
 import Chat from "./Chat";
 import Frameworks from "./Frameworks";
 import Discovery from "./Discovery";
 import Sources from "./Sources";
 
 const pages: Record<string, React.ComponentType> = {
-  dashboard: Dashboard,
   chat: Chat,
   frameworks: Frameworks,
   discovery: Discovery,
@@ -15,9 +13,9 @@ const pages: Record<string, React.ComponentType> = {
 };
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const [activeTab, setActiveTab] = useState("chat");
 
-  const Page = pages[activeTab] || Dashboard;
+  const Page = pages[activeTab] || Chat;
 
   return (
     <AppLayout activeTab={activeTab} onTabChange={setActiveTab}>
