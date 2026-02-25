@@ -3,6 +3,7 @@ import { ArrowRight, BarChart3, Search, GitFork, FileCheck, ChevronRight, Loader
 import { supabase } from "@/integrations/supabase/client";
 
 const LandingPage = () => {
+  const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -29,7 +30,7 @@ const LandingPage = () => {
     try {
       const { error: insertError } = await supabase
         .from("waitlist")
-        .insert({ email, source: "landing_page" });
+        .insert({ email, first_name: firstName || null, source: "landing_page" });
 
       if (insertError) {
         if (insertError.code === "23505") {
@@ -312,16 +313,26 @@ const LandingPage = () => {
 
           {!submitted ? (
             <>
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@startup.com"
-                  required
-                  disabled={submitting}
-                  className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base disabled:opacity-50"
-                />
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3 max-w-md mx-auto mb-3">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name (Optional)"
+                    disabled={submitting}
+                    className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base disabled:opacity-50"
+                  />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@startup.com"
+                    required
+                    disabled={submitting}
+                    className="flex-[2] px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base disabled:opacity-50"
+                  />
+                </div>
                 <button
                   type="submit"
                   disabled={submitting}

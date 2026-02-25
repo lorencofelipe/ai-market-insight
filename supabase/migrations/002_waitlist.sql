@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS public.waitlist (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   email text NOT NULL UNIQUE,
+  first_name text,
   created_at timestamptz DEFAULT now() NOT NULL,
   source text DEFAULT 'landing_page',
   metadata jsonb DEFAULT '{}'::jsonb
