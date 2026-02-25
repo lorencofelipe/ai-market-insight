@@ -1,16 +1,50 @@
-import { useState } from "react";
-import { ArrowRight, BarChart3, Search, GitFork, FileCheck, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, BarChart3, Search, GitFork, FileCheck, ChevronRight, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const LandingPage = () => {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [waitlistCount] = useState(47);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [waitlistCount, setWaitlistCount] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchCount = async () => {
+      const { count } = await supabase
+        .from("waitlist")
+        .select("*", { count: "exact", head: true });
+      if (count !== null) setWaitlistCount(count);
+    };
+    fetchCount();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      // TODO: integrate with Supabase to store email
+    if (!email) return;
+
+    setSubmitting(true);
+    setError("");
+
+    try {
+      const { error: insertError } = await supabase
+        .from("waitlist")
+        .insert({ email, source: "landing_page" });
+
+      if (insertError) {
+        if (insertError.code === "23505") {
+          setError("You're already on the waitlist!");
+        } else {
+          setError("Something went wrong. Please try again.");
+        }
+      } else {
+        setSubmitted(true);
+        setWaitlistCount((prev) => prev + 1);
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -277,23 +311,39 @@ const LandingPage = () => {
           </p>
 
           {!submitted ? (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-4">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@startup.com"
-                required
-                className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base"
-              />
-              <button
-                type="submit"
-                className="bg-[#4F46E5] text-white px-6 py-3 rounded-xl text-base font-medium hover:bg-[#4338CA] transition-all hover:shadow-lg hover:shadow-[#4F46E5]/25 cursor-pointer flex items-center justify-center gap-2"
-              >
-                Join waitlist
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </form>
+            <>
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@startup.com"
+                  required
+                  disabled={submitting}
+                  className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="bg-[#4F46E5] text-white px-6 py-3 rounded-xl text-base font-medium hover:bg-[#4338CA] transition-all hover:shadow-lg hover:shadow-[#4F46E5]/25 cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Joining...
+                    </>
+                  ) : (
+                    <>
+                      Join waitlist
+                      <ChevronRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </form>
+              {error && (
+                <p className="text-sm text-amber-600 mb-3">{error}</p>
+              )}
+            </>
           ) : (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-6 py-4 max-w-md mx-auto mb-4">
               <p className="text-emerald-700 font-medium">
