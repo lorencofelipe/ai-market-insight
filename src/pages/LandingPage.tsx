@@ -12,7 +12,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const fetchCount = async () => {
-      const { count } = await supabase
+      const { count } = await (supabase as any)
         .from("waitlist")
         .select("*", { count: "exact", head: true });
       if (count !== null) setWaitlistCount(count);
@@ -28,7 +28,7 @@ const LandingPage = () => {
     setError("");
 
     try {
-      const { error: insertError } = await supabase
+      const { error: insertError } = await (supabase as any)
         .from("waitlist")
         .insert({ email, first_name: firstName || null, source: "landing_page" });
 
