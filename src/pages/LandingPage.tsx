@@ -319,7 +319,8 @@ const LandingPage = () => {
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name (Optional)"
+                    placeholder="First Name"
+                    required
                     disabled={submitting}
                     className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#1A1A2E] placeholder-[#6B7280] focus:outline-none focus:ring-2 focus:ring-[#4F46E5] focus:border-transparent transition-all text-base disabled:opacity-50"
                   />
