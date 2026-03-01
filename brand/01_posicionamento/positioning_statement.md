@@ -18,20 +18,20 @@
 | **Para quem** | Qualquer profissional que precisa fazer análise de mercado — founders validando ideias, investidores fazendo due diligence, consultores montando relatórios, gerentes de produto estudando concorrentes |
 | **O que é** | Um copilot de market intelligence que transforma uma descrição de negócio em um dossiê completo de mercado |
 | **O que faz** | Entrega TAM/SAM/SOM, mapa de concorrentes, frameworks estratégicos (SWOT, Porter, BCG) — tudo em um fluxo guiado, sem exigir que o usuário saiba o que perguntar |
-| **Por que é diferente** | Concorrentes genéricos (Perplexity, ChatGPT) exigem 10-15 prompts para montar uma análise fragmentada. O AI Market Insight entrega o dossiê completo a partir de uma única descrição |
+| **Por que é diferente** | Concorrentes genéricos (Perplexity, ChatGPT) exigem 10-15 prompts para montar uma análise fragmentada. O Coremarket entrega o dossiê completo a partir de uma única descrição |
 | **Por que agora** | LLMs commoditizaram o acesso à informação, mas ninguém resolveu a *estruturação e confiabilidade* dessa informação para decisões de negócio |
 
 ### Elevator Pitch (30 segundos)
 
-> *"Founders e investidores perdem horas tentando montar análises de mercado com prompts avulsos no ChatGPT — e no final, os dados não batem. O AI Market Insight é o copilot que transforma uma descrição da sua ideia em um dossiê completo: tamanho de mercado, concorrentes, frameworks estratégicos. Em um único fluxo. Com fontes. Sem precisar saber o que perguntar."*
+> *"Founders e investidores perdem horas tentando montar análises de mercado com prompts avulsos no ChatGPT — e no final, os dados não batem. O Coremarket é o copilot que transforma uma descrição da sua ideia em um dossiê completo: tamanho de mercado, concorrentes, frameworks estratégicos. Em um único fluxo. Com fontes. Sem precisar saber o que perguntar."*
 
 ---
 
-## 2. Análise Competitiva: AI Market Insight vs Perplexity
+## 2. Análise Competitiva: Coremarket vs Perplexity
 
 ### Concorrente principal: Perplexity
 
-| Dimensão | Perplexity | AI Market Insight |
+| Dimensão | Perplexity | Coremarket |
 |----------|------------|-------------------|
 | **Modelo** | Search engine + LLM | Copilot de market intelligence |
 | **Input do usuário** | Precisa saber o que perguntar (prompt) | Descreve a ideia/negócio e o sistema guia |
@@ -48,7 +48,7 @@
 - **Velocidade percebida** — resposta quase instantânea
 - **Gratuito para uso básico** — barreira zero
 
-### Onde o AI Market Insight ganha
+### Onde o Coremarket ganha
 
 - **Profundidade vertical** — feito para análise de mercado, não para perguntas genéricas
 - **Fluxo guiado** — o usuário não precisa ser analista
@@ -60,7 +60,7 @@
 
 ```
 Perplexity dá RESPOSTAS (texto)
-AI Market Insight dá ANÁLISES (estrutura + dados + fontes)
+Coremarket dá ANÁLISES (estrutura + dados + fontes)
 
 Respostas ≠ Análises
 ```
@@ -172,7 +172,7 @@ Respostas ≠ Análises
 |----------|----------------------|
 | #1 | *"Descreva seu negócio. Receba TAM, concorrentes e frameworks estratégicos — com fontes, em formato de relatório."* |
 | #2 | *"Para founders, investidores e qualquer pessoa que precisa de dados de mercado confiáveis sem virar analista."* |
-| #3 | *"O AI Market Insight reúne sizing, concorrentes e frameworks em um fluxo guiado. Com fontes. Sem interpretação."* |
+| #3 | *"O Coremarket reúne sizing, concorrentes e frameworks em um fluxo guiado. Com fontes. Sem interpretação."* |
 
 ### Taglines para Product Hunt
 

@@ -1,4 +1,4 @@
-# AI Market Insight — Brand Strategy
+# Coremarket — Brand Strategy
 
 ## Status por Fase
 

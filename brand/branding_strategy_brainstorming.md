@@ -1,4 +1,4 @@
-# 🧠 Brainstorming: Estratégia de Branding — AI Market Insight
+# 🧠 Brainstorming: Estratégia de Branding — Coremarket
 
 > Documento gerado seguindo a metodologia da skill **brainstorming** — transformando ideias em designs validados antes de qualquer implementação.
 
@@ -6,8 +6,8 @@
 
 ## 📋 Understanding Summary
 
-- **O que estamos construindo:** Estratégia de branding para o **AI Market Insight** — plataforma de inteligência de mercado e análise competitiva powered by AI
-- **Por que existe:** Para posicionar o AI Market Insight como ferramenta premium de market intelligence, diferenciando-o de "wrappers de LLM" genéricos
+- **O que estamos construindo:** Estratégia de branding para o **Coremarket** — plataforma de inteligência de mercado e análise competitiva powered by AI
+- **Por que existe:** Para posicionar o Coremarket como ferramenta premium de market intelligence, diferenciando-o de "wrappers de LLM" genéricos
 - **Para quem é:** Founders, investidores e equipes de estratégia que precisam de dados de mercado confiáveis (TAM/SAM/SOM, SWOT, Porter, concorrentes)
 - **Produto core:** Chat RAG com citações reais, scraping inteligente (Firecrawl), frameworks estratégicos (SWOT, Porter, BCG, PESTEL), market sizing quantitativo
 - **Diferencial:** Respostas baseadas em dados reais (não alucinações), arquitetura 3 camadas auto-corretiva, zero-cost stack
@@ -15,9 +15,9 @@
 
 ---
 
-## 🏆 Top 10 Skills para o Branding do AI Market Insight
+## 🏆 Top 10 Skills para o Branding do Coremarket
 
-| # | Skill | Relevância | Como se aplica ao AI Market Insight |
+| # | Skill | Relevância | Como se aplica ao Coremarket |
 |---|-------|------------|-------------------------------------|
 | 1 | `copywriting` | ⭐⭐⭐⭐⭐ | Copy da homepage, landing pages, messaging do produto |
 | 2 | `competitive-landscape` | ⭐⭐⭐⭐⭐ | Irônico: usar análise competitiva para posicionar **o próprio** produto de análise competitiva |
@@ -32,7 +32,7 @@
 
 ---
 
-## 🗺️ Mapa Estratégico: 4 Fases do Branding para AI Market Insight
+## 🗺️ Mapa Estratégico: 4 Fases do Branding para Coremarket
 
 ```mermaid
 graph LR
@@ -45,7 +45,7 @@ graph LR
 
 ## 🔍 Fase 1 — Posicionamento & Diferenciação
 
-> **Pergunta central:** Como o AI Market Insight se diferencia de ChatGPT, Gemini, e outras ferramentas de IA genéricas?
+> **Pergunta central:** Como o Coremarket se diferencia de ChatGPT, Gemini, e outras ferramentas de IA genéricas?
 
 ### Skills utilizadas
 - `competitive-landscape` — Mapear concorrentes diretos e indiretos
@@ -63,7 +63,7 @@ graph LR
 
 ```
 "O ChatGPT inventa dados de mercado.
- O AI Market Insight cita as fontes."
+ O Coremarket cita as fontes."
 ```
 
 **Modelos mentais mais relevantes (PLFS):**
@@ -80,7 +80,7 @@ graph LR
 ```
 Use a skill competitive-landscape.
 
-Produto: AI Market Insight — plataforma de inteligência de mercado 
+Produto: Coremarket — plataforma de inteligência de mercado 
 powered by AI com RAG (dados reais com citações), scraping 
 inteligente, e frameworks estratégicos (SWOT, Porter, BCG, 
 TAM/SAM/SOM).
@@ -88,7 +88,7 @@ TAM/SAM/SOM).
 Concorrentes diretos: ChatGPT/Gemini (wrappers genéricos), 
 CB Insights, Crunchbase, PitchBook, SparkToro.
 
-Objetivo: Identificar gaps de posicionamento onde AI Market Insight
+Objetivo: Identificar gaps de posicionamento onde Coremarket
 pode vencer. Foco no ângulo "dados reais com fontes vs alucinação".
 
 Aplique Porter's Five Forces ao mercado de market intelligence 
@@ -100,7 +100,7 @@ tools e identifique o quadrante de posicionamento ideal.
 ```
 Use a skill marketing-psychology.
 
-Produto: AI Market Insight (plataforma de market intelligence com IA)
+Produto: Coremarket (plataforma de market intelligence com IA)
 Comportamento-alvo: Convencer founders e investidores a CONFIAR 
 nas respostas do chat de mercado (em vez de usar ChatGPT/Gemini).
 
@@ -122,7 +122,7 @@ Máximo 4 modelos. Inclua guardrails éticas.
 
 ## 🎨 Fase 2 — Identidade & Tom de Voz
 
-> **Pergunta central:** Como o AI Market Insight deve *soar* e *parecer*?
+> **Pergunta central:** Como o Coremarket deve *soar* e *parecer*?
 
 ### Skills utilizadas
 - `content-creator` — Brand voice analyzer e definição de tom
@@ -130,7 +130,7 @@ Máximo 4 modelos. Inclua guardrails éticas.
 
 ### Tom de voz proposto
 
-| Atributo | ✅ AI Market Insight | ❌ Não é isso |
+| Atributo | ✅ Coremarket | ❌ Não é isso |
 |----------|---------------------|---------------|
 | **Confiante** | "Dados de mercado com fontes verificáveis" | "Talvez isso possa ajudar..." |
 | **Data-driven** | "TAM de $15B baseado em Gartner 2025" | "O mercado é enorme!" |
@@ -152,7 +152,7 @@ Arquétipo secundário: O Criador (The Creator)
 ```
 Use a skill content-creator.
 
-Quero estabelecer o tom de voz do AI Market Insight.
+Quero estabelecer o tom de voz do Coremarket.
 
 Produto: Plataforma de inteligência de mercado com IA. 
 Features: chat RAG com citações, análise de concorrentes, 
@@ -179,7 +179,7 @@ Crie 3 amostras de texto:
 
 ## 📝 Fase 3 — Mensagem & Conteúdo
 
-> **Pergunta central:** Qual é a promessa do AI Market Insight em uma frase?
+> **Pergunta central:** Qual é a promessa do Coremarket em uma frase?
 
 ### Skills utilizadas
 - `copywriting` — Copy da homepage e landing pages
@@ -187,7 +187,7 @@ Crie 3 amostras de texto:
 
 ### Value Proposition Canvas
 
-| Elemento | AI Market Insight |
+| Elemento | Coremarket |
 |----------|-------------------|
 | **Job-to-be-done** | Tomar decisões de mercado baseadas em dados confiáveis |
 | **Pain** | LLMs genéricos inventam dados; reports tradicionais custam $$$ e demoram |
@@ -238,11 +238,11 @@ por seção → 3 alternativas de headline e CTA.
 ```
 Use a skill content-marketer.
 
-Produto: AI Market Insight — plataforma de market intelligence 
+Produto: Coremarket — plataforma de market intelligence 
 com IA para founders, investidores e estrategistas.
 
 Objetivo: Criar estratégia de content marketing para posicionar
-o AI Market Insight como autoridade em market intelligence.
+o Coremarket como autoridade em market intelligence.
 
 ICP: Founders de startups (Seed → Series A), VCs, equipes de 
 estratégia. No Brasil e globalmente.
@@ -265,7 +265,7 @@ plano de distribuição (LinkedIn + Blog + Newsletter).
 
 ## 📣 Fase 4 — Lançamento & Crescimento
 
-> **Pergunta central:** Como levar o AI Market Insight ao mercado com momentum?
+> **Pergunta central:** Como levar o Coremarket ao mercado com momentum?
 
 ### Skills utilizadas
 - `launch-strategy` — Framework ORB para lançamento faseado
@@ -273,7 +273,7 @@ plano de distribuição (LinkedIn + Blog + Newsletter).
 - `marketing-ideas` — Priorização de canais
 - `pricing-strategy` — Modelo de monetização
 
-### ORB Framework aplicado ao AI Market Insight
+### ORB Framework aplicado ao Coremarket
 
 | Canal | Tipo | Ação concreta |
 |-------|------|---------------|
@@ -299,7 +299,7 @@ graph LR
 ```
 Use a skill launch-strategy.
 
-Produto: AI Market Insight — plataforma de market intelligence 
+Produto: Coremarket — plataforma de market intelligence 
 com IA. Features: RAG Chat com citações, análise de concorrentes, 
 frameworks (SWOT, Porter, BCG, TAM/SAM/SOM), scraping Firecrawl.
 
@@ -324,7 +324,7 @@ Proponha:
 ```
 Use a skill pricing-strategy.
 
-Produto: AI Market Insight
+Produto: Coremarket
 Tipo: SaaS / ferramenta de IA
 Target: Founders (SMB), investidores, equipes de estratégia
 GTM: Self-serve (plano futuro: sales-led para enterprise)
@@ -346,13 +346,13 @@ Proponha tiers Good/Better/Best com rationale.
 
 ---
 
-## ⚡ Combos Poderosos para AI Market Insight
+## ⚡ Combos Poderosos para Coremarket
 
 ### 🔗 Combo 1: "Eat Your Own Dog Food"
 ```
 competitive-landscape → marketing-psychology → copywriting
 ```
-Use o **próprio AI Market Insight** para analisar seus concorrentes → Aplique psicologia para posicionar → Escreva copy matadora.
+Use o **próprio Coremarket** para analisar seus concorrentes → Aplique psicologia para posicionar → Escreva copy matadora.
 
 > **Meta-estratégia:** Cada output do produto é material de marketing. O próprio produto prova seu valor.
 
@@ -372,7 +372,7 @@ Defina modelo freemium → Planeje lançamento por fases → Priorize os 5 canai
 
 ## 💡 Ideia Única: "Ship the Output as Marketing"
 
-O AI Market Insight tem uma vantagem rara: **o output do produto É o conteúdo de marketing**.
+O Coremarket tem uma vantagem rara: **o output do produto É o conteúdo de marketing**.
 
 | O que o produto gera | Como vira marketing |
 |----------------------|---------------------|

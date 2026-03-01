@@ -1,6 +1,6 @@
 # Brand Decision Log
 
-> Registre aqui as decisões estratégicas referentes à marca e ao posicionamento do AI Market Insight para ter histórico. Mantenha o arquivo atualizado a cada nova fase completada.
+> Registre aqui as decisões estratégicas referentes à marca e ao posicionamento do Coremarket para ter histórico. Mantenha o arquivo atualizado a cada nova fase completada.
 
 ## Registro de Decisões
 
@@ -25,5 +25,6 @@
 | 2026-02-25 | Reddit as primary channel | LinkedIn first / X first | Highest organic reach for zero-follower accounts | r/startups, r/SaaS, r/EntrepreneurRideAlong |
 | 2026-02-25 | Product Hunt at Week 13 | Immediate launch | Needs testimonials first; launching with 0 proof wastes the PH opportunity | 12 weeks of BIP before PH launch |
 | 2026-02-25 | 2.5h/week routine (Mon/Thu/Sat) | Daily posting | Sustainable beats ambitious. Consistency > volume | 2 posts/week + engagement + review |
+| 2026-03-01 | Mudança de Nome Estratégico | Nomes com som afiado de X/Z (Zymark, Vexmarket) | O nome "Coremarket" foi escolhido. Transmite a entrega do núcleo essencial (The Foundation) e dialoga diretamente com o mercado B2B (Consultores, Founders) | Redirecionou todas as documentações de marca ("AI Market Insight" → "Coremarket") e ditou a estética clean/institucional da interface |
 
 *(Sempre que uma fase trouxer uma decisão que afete a comunicação ou target, registre aqui.)*

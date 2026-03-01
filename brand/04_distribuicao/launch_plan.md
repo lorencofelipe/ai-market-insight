@@ -82,7 +82,7 @@ POST 1 (Launch story):
 
 So I'm building the tool I wish existed.
 
-AI Market Insight: describe your idea, get the full market 
+Coremarket: describe your idea, get the full market 
 dossier. TAM, competitors, frameworks. One flow.
 
 Week 1 stats:
@@ -113,7 +113,7 @@ Week 2 stats:
 
 ```
 POST 3 (Transparent metrics):
-"Week 3 building AI Market Insight in public.
+"Week 3 building Coremarket in public.
 
 What went right:
 - Competitor discovery finds 6-8 real companies

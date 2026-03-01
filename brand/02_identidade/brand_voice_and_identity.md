@@ -19,7 +19,7 @@
 
 ### Voice Compass: "This, Not That"
 
-| ✅ AI Market Insight sounds like | ❌ AI Market Insight does NOT sound like |
+| ✅ Coremarket sounds like | ❌ Coremarket does NOT sound like |
 |----------------------------------|----------------------------------------|
 | "Your market is worth $2.3B. Here's how we calculated it." | "The market represents a significant opportunity for growth." |
 | "We found 6 competitors. Here's how they compare." | "Our AI-powered engine leverages cutting-edge algorithms to..." |
@@ -179,7 +179,7 @@ and got the full dossier back?
 TAM/SAM/SOM. Competitor map. Porter's 5 Forces.
 One flow. With sources.
 
-That's what we're building at AI Market Insight.
+That's what we're building at Coremarket.
 
 → [link]
 ```
@@ -191,7 +191,7 @@ Subject: Your first market report is 60 seconds away
 
 Hi [name],
 
-Welcome to AI Market Insight.
+Welcome to Coremarket.
 
 Here's how it works:
 1. Describe your business idea
@@ -202,7 +202,7 @@ No prompts to memorize. No tabs to juggle. No data to reconcile.
 
 → [Create your first report]
 
-— The AI Market Insight team
+— The Coremarket team
 ```
 
 ### Sample 4: Feature Announcement (TAM/SAM/SOM)

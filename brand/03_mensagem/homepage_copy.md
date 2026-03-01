@@ -224,12 +224,12 @@ Once you have users, replace this section with:
 
 ### Nav Bar
 ```
-[Logo: AI Market Insight]     Features    How it works    [Join waitlist →]
+[Logo: Coremarket]     Features    How it works    [Join waitlist →]
 ```
 
 ### Footer
 ```
-AI Market Insight
+Coremarket
 Market intelligence for people who need answers, not prompts.
 
 Product           Resources         Company
@@ -237,7 +237,7 @@ Features          Blog              About
 Pricing           Documentation     Contact
 Changelog         
 
-© 2026 AI Market Insight
+© 2026 Coremarket
 ```
 
 ### Microcopy (Detail Copy)
