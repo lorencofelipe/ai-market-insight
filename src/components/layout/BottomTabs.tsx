@@ -1,8 +1,9 @@
-import { MessageSquare, Layers, Search } from "lucide-react";
+import { MessageSquare, Layers, Search, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const tabs = [
   { id: "chat", label: "Chat", icon: MessageSquare },
+  { id: "history", label: "History", icon: Clock },
   { id: "frameworks", label: "Frameworks", icon: Layers },
   { id: "discovery", label: "Discovery", icon: Search },
 ];

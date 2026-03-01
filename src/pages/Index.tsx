@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Chat from "./Chat";
+import History from "./History";
 import Frameworks from "./Frameworks";
 import Discovery from "./Discovery";
 
 const pages: Record<string, React.ComponentType> = {
   chat: Chat,
+  history: History,
   frameworks: Frameworks,
   discovery: Discovery,
 };
