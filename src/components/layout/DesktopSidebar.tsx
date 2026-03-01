@@ -1,4 +1,4 @@
-import { MessageSquare, Layers, Search, Zap, Clock, X } from "lucide-react";
+import { MessageSquare, Layers, Search, Zap, Clock, X, PanelLeftClose, PanelLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -33,15 +33,24 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
         collapsed ? "w-16" : "w-56"
       )}
     >
-      <div className="flex items-center gap-2.5 px-4 h-14 border-b border-border">
-        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-          <Zap className="h-4 w-4 text-primary-foreground" />
+      <div className="flex items-center justify-between px-4 h-14 border-b border-border">
+        <div className="flex items-center gap-2.5">
+          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
+            <Zap className="h-4 w-4 text-primary-foreground" />
+          </div>
+          {!collapsed && (
+            <span className="font-bold text-sm tracking-tight text-foreground">
+              InsightForge
+            </span>
+          )}
         </div>
-        {!collapsed && (
-          <span className="font-bold text-sm tracking-tight text-foreground">
-            InsightForge
-          </span>
-        )}
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
+        </button>
       </div>
 
       <nav className="py-3 space-y-1 px-2">
@@ -108,12 +117,6 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
 
       {!showHistory && !collapsed && <div className="flex-1" />}
 
-      <button
-        onClick={() => setCollapsed(!collapsed)}
-        className="flex items-center justify-center h-10 border-t border-border text-muted-foreground hover:text-foreground text-xs transition-colors"
-      >
-        {collapsed ? "→" : "← Collapse"}
-      </button>
     </aside>
   );
 }
