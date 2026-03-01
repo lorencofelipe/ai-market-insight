@@ -30,30 +30,50 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
     <aside
       className={cn(
         "flex flex-col h-full border-r border-border bg-card transition-all duration-200",
-        collapsed ? "w-16" : "w-56"
+        collapsed ? "w-[60px]" : "w-56"
       )}>
 
-      <div className="flex items-center justify-between px-4 h-14 border-b border-border">
-        <div className="flex items-center gap-2.5">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <Zap className="h-4 w-4 text-primary-foreground" />
+      <div className={cn(
+        "flex items-center h-14 border-b border-border shrink-0",
+        collapsed ? "justify-center px-2" : "justify-between px-4"
+      )}>
+        {collapsed ? (
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+              <Zap className="h-4 w-4 text-primary-foreground" />
+            </div>
           </div>
-          {!collapsed &&
-          <span className="font-bold text-sm tracking-tight text-foreground">Coremarket
-
-          </span>
-          }
-        </div>
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}>
-
-          {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
-        </button>
+        ) : (
+          <>
+            <div className="flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
+                <Zap className="h-4 w-4 text-primary-foreground" />
+              </div>
+              <span className="font-bold text-sm tracking-tight text-foreground">Coremarket</span>
+            </div>
+            <button
+              onClick={() => setCollapsed(true)}
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              title="Collapse sidebar">
+              <PanelLeftClose className="h-4 w-4" />
+            </button>
+          </>
+        )}
       </div>
 
-      <nav className="py-3 space-y-1 px-2">
+      {/* Expand button when collapsed - positioned next to sidebar */}
+      {collapsed && (
+        <div className="flex justify-center py-2">
+          <button
+            onClick={() => setCollapsed(false)}
+            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            title="Expand sidebar">
+            <PanelLeft className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+
+      <nav className={cn("py-3 space-y-1", collapsed ? "px-1.5 flex flex-col items-center" : "px-2")}>
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -62,26 +82,27 @@ export function DesktopSidebar({ activeTab, onTabChange }: DesktopSidebarProps) 
               key={tab.id}
               onClick={() => {
                 if (tab.id === "history") {
+                  if (collapsed) setCollapsed(false);
                   setShowHistory((v) => !v);
                 } else {
                   onTabChange(tab.id);
                 }
               }}
               className={cn(
-                "flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                "flex items-center rounded-lg text-sm font-medium transition-all",
+                collapsed ? "justify-center w-10 h-10 p-0" : "gap-3 w-full px-3 py-2.5",
                 tab.id === "history" ?
-                showHistory ?
-                "text-foreground bg-muted" :
-                "text-muted-foreground hover:text-foreground hover:bg-muted" :
-                isActive ?
-                "bg-primary text-primary-foreground shadow-sm" :
-                "text-muted-foreground hover:text-foreground hover:bg-muted"
-              )}>
-
+                  showHistory && !collapsed ?
+                    "text-foreground bg-muted" :
+                    "text-muted-foreground hover:text-foreground hover:bg-muted" :
+                  isActive ?
+                    "bg-primary text-primary-foreground shadow-sm" :
+                    "text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
+              title={collapsed ? tab.label : undefined}>
               <Icon className="h-4 w-4 shrink-0" />
               {!collapsed && <span>{tab.label}</span>}
             </button>);
-
         })}
       </nav>
 
