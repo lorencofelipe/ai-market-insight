@@ -1,20 +1,68 @@
-import { useState } from "react";
 import {
     useLocalRuntime,
-    Composer,
-    Message,
+    AssistantRuntimeProvider,
     MessagePrimitive,
-    MessageContext
+    type ChatModelAdapter,
+    makeAssistantToolUI,
 } from "@assistant-ui/react";
 import { Thread, makeMarkdownText } from "@assistant-ui/react-ui";
 import { MarketSizingToolCall } from "./MarketSizingToolCall";
-import { Card } from "@/components/ui/card";
 import { TrustBadge } from "./TrustBadge";
 
 const MarkdownText = makeMarkdownText();
 
+const MyModelAdapter: ChatModelAdapter = {
+    async run({ messages }) {
+        const lastMessage = messages[messages.length - 1];
+        const text = lastMessage?.content
+            ?.filter((c): c is { type: "text"; text: string } => c.type === "text")
+            .map((c) => c.text)
+            .join(" ") ?? "";
+
+        if (text.toLowerCase().includes("tam")) {
+            return {
+                content: [
+                    {
+                        type: "text",
+                        text: "Here is the market sizing breakdown based on the latest PitchBook and Gartner reports:"
+                    },
+                    {
+                        type: "tool-call" as const,
+                        toolName: "render_market_sizing",
+                        args: { tam: "$15B", sam: "$4.2B", som: "$800M" },
+                        argsText: JSON.stringify({ tam: "$15B", sam: "$4.2B", som: "$800M" }),
+                        toolCallId: "call_123"
+                    }
+                ]
+            };
+        }
+        return {
+            content: [
+                {
+                    type: "text",
+                    text: "I can help with that. To see our special Coremarket rendering, try asking me 'What is the TAM for AI in Finance?'"
+                }
+            ]
+        };
+    }
+};
+
+const MarketSizingToolUI = makeAssistantToolUI({
+    toolName: "render_market_sizing",
+    render: ({ args }) => {
+        const a = args as { tam: string; sam: string; som: string };
+        return (
+            <MarketSizingToolCall
+                tam={a.tam}
+                sam={a.sam}
+                som={a.som}
+            />
+        );
+    },
+});
+
 export function CoremarketChat() {
-    const runtime = useLocalRuntime({
+    const runtime = useLocalRuntime(MyModelAdapter, {
         initialMessages: [
             {
                 role: "assistant",
@@ -26,43 +74,19 @@ export function CoremarketChat() {
                 ]
             },
         ],
-        async onNew(message) {
-            if (message.content[0]?.type === "text" && message.content[0].text.toLowerCase().includes("tam")) {
-                return {
-                    content: [
-                        {
-                            type: "text",
-                            text: "Here is the market sizing breakdown based on the latest PitchBook and Gartner reports:"
-                        },
-                        {
-                            type: "tool-call",
-                            toolName: "render_market_sizing",
-                            args: { tam: "$15B", sam: "$4.2B", som: "$800M" },
-                            toolCallId: "call_123"
-                        }
-                    ]
-                };
-            }
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: "I can help with that. To see our special Coremarket rendering, try asking me 'What is the TAM for AI in Finance?'"
-                    }
-                ]
-            };
-        }
     });
 
     return (
-        <div className="h-full w-full bg-background flex flex-col">
-            <Thread
-                runtime={runtime}
-                components={{
-                    AssistantMessage: MyAssistantMessage,
-                }}
-            />
-        </div>
+        <AssistantRuntimeProvider runtime={runtime}>
+            <div className="h-full w-full bg-background flex flex-col">
+                <MarketSizingToolUI />
+                <Thread
+                    components={{
+                        AssistantMessage: MyAssistantMessage,
+                    }}
+                />
+            </div>
+        </AssistantRuntimeProvider>
     );
 }
 
@@ -79,17 +103,6 @@ const MyAssistantMessage = () => {
             <div className="text-foreground pl-10">
                 <MessagePrimitive.Content components={{
                     Text: MarkdownText,
-                    tools: {
-                        render_market_sizing: ({ args }: any) => {
-                            return (
-                                <MarketSizingToolCall
-                                    tam={args.tam}
-                                    sam={args.sam}
-                                    som={args.som}
-                                />
-                            )
-                        }
-                    }
                 }} />
             </div>
         </MessagePrimitive.Root>
