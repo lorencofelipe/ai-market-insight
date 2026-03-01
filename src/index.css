@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+@import "@assistant-ui/react-ui/styles/index.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -143,13 +145,16 @@
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--muted-foreground) / 0.2);
     border-radius: 3px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.4);
   }
@@ -159,27 +164,35 @@
   .text-confidence-high {
     color: hsl(var(--confidence-high));
   }
+
   .text-confidence-medium {
     color: hsl(var(--confidence-medium));
   }
+
   .text-confidence-low {
     color: hsl(var(--confidence-low));
   }
+
   .bg-confidence-high {
     background-color: hsl(var(--confidence-high));
   }
+
   .bg-confidence-medium {
     background-color: hsl(var(--confidence-medium));
   }
+
   .bg-confidence-low {
     background-color: hsl(var(--confidence-low));
   }
+
   .text-signal-up {
     color: hsl(var(--signal-up));
   }
+
   .text-signal-down {
     color: hsl(var(--signal-down));
   }
+
   .text-signal-neutral {
     color: hsl(var(--signal-neutral));
   }
