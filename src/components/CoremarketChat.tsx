@@ -22,32 +22,31 @@ const MyModelAdapter: ChatModelAdapter = {
             .map((c) => c.text)
             .join(" ") ?? "";
 
-        if (text.toLowerCase().includes("tam")) {
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: "Based on the latest industry reports and our proprietary data models, here is the market sizing breakdown:"
-                    },
-                    {
-                        type: "tool-call" as const,
-                        toolName: "render_market_sizing",
-                        args: { tam: "$15B", sam: "$4.2B", som: "$800M" },
-                        argsText: JSON.stringify({ tam: "$15B", sam: "$4.2B", som: "$800M" }),
-                        toolCallId: "call_123"
-                    },
-                    {
-                        type: "text",
-                        text: "This represents a highly fragmented market with significant room for consolidation in the mid-market segment. Key competitors are currently focusing on the $4.2B SAM with API-first strategies."
-                    }
-                ]
-            };
-        }
+        const targetMarket = text.trim() || "AI-powered market intelligence tools";
+
         return {
             content: [
                 {
                     type: "text",
-                    text: "I am ready to analyze market data. For a demonstration of my capabilities, try asking me for a TAM analysis (e.g., 'What is the TAM for AI in Finance?')."
+                    text: `Based on the latest industry reports and our proprietary data models, here is the market sizing breakdown for **${targetMarket}**:`
+                },
+                {
+                    type: "tool-call" as const,
+                    toolName: "render_market_sizing",
+                    args: {
+                        market: targetMarket,
+                        methodology: "bottom_up",
+                        tam: { value: "$15.0B", calculation: "150K companies × $100K avg contract", sources: ["Gartner 2025", "IDC Forecast"] },
+                        sam: { value: "$2.25B", filters: "North America (45%) • Mid-market 100-1000 employees (33%)" },
+                        som: { value: "$45M", market_share: "2%" },
+                        growth: { cagr: "24.5%", years: 5 }
+                    },
+                    argsText: JSON.stringify({ market: targetMarket }),
+                    toolCallId: "call_" + Math.random().toString(36).substring(7)
+                },
+                {
+                    type: "text",
+                    text: "This represents a highly fragmented market with significant room for consolidation in the mid-market segment. Let me know if you want to explore the Porter's 5 Forces or Competitor Map for this sector."
                 }
             ]
         };
@@ -57,13 +56,16 @@ const MyModelAdapter: ChatModelAdapter = {
 const MarketSizingToolUI = makeAssistantToolUI({
     toolName: "render_market_sizing",
     render: ({ args }) => {
-        const a = args as { tam: string; sam: string; som: string };
+        const a = args as any;
         return (
             <div className="my-6">
                 <MarketSizingToolCall
+                    market={a.market}
+                    methodology={a.methodology}
                     tam={a.tam}
                     sam={a.sam}
                     som={a.som}
+                    growth={a.growth}
                 />
             </div>
         );
@@ -152,14 +154,23 @@ const AssistantMessage = () => {
     return (
         <MessagePrimitive.Root className="w-full animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="mb-4 flex items-center justify-between">
-                <h2 className="inline-flex items-center gap-2 text-xl font-semibold text-primary">
-                    <Database className="h-5 w-5" />
-                    Coremarket Report
-                </h2>
+                <div className="flex items-center gap-3">
+                    <div className="bg-primary/10 text-primary w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 border border-primary/20">
+                        CM
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="font-semibold text-[15px] text-foreground flex items-center gap-1.5">
+                            Coremarket Analyst
+                        </span>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                            <Database className="w-3 h-3" /> Data backed by verified sources
+                        </span>
+                    </div>
+                </div>
                 <TrustBadge level="high" />
             </div>
 
-            <div className="text-foreground text-[16px] leading-relaxed prose prose-neutral dark:prose-invert max-w-none">
+            <div className="text-foreground text-[16px] leading-relaxed pl-12 prose prose-neutral dark:prose-invert max-w-none">
                 <MessagePrimitive.Content components={{
                     Text: MarkdownText,
                 }} />
