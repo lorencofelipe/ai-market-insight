@@ -79,19 +79,19 @@ def scrape_single(url: str) -> str:
     print(f"Scraping URL: {url} ...")
     try:
         # We only request markdown for now to keep the payload clean
-        scrape_result = app.scrape_url(url, params={'formats': ['markdown']})
+        scrape_result = app.scrape(url, formats=['markdown'])
         
-        md_content = scrape_result.get("markdown", "")
+        md_content = getattr(scrape_result, "markdown", "")
         if not md_content:
             print("WARNING: No markdown content returned.")
-        status_code = scrape_result.get("metadata", {}).get("statusCode", 200)
+        status_code = getattr(getattr(scrape_result, "metadata", None), "statusCode", 200)
 
         output_path = save_scrape_result(url, md_content, status_code=status_code)
-        print(f"✅ Saved clean markdown for {url} to {output_path}")
+        print(f"[SUCCESS] Saved clean markdown for {url} to {output_path}")
         return output_path
         
     except Exception as e:
-        print(f"❌ Failed to scrape {url}: {e}", file=sys.stderr)
+        print(f"[ERROR] Failed to scrape {url}: {e}", file=sys.stderr)
         output_path = save_scrape_result(url, "", status_code=500, error=str(e))
         return output_path
 
@@ -107,7 +107,7 @@ def scrape_batch(urls: list[str]) -> list[str]:
     print(f"Starting batch scrape for {len(urls)} URLs...")
     try:
         # Firecrawl native batch scraping
-        batch_result = app.async_scrape_urls(urls, params={'formats': ['markdown']})
+        batch_result = app.batch_scrape(urls, formats=['markdown'])
         
         saved_paths = []
         if batch_result and "data" in batch_result:
@@ -117,14 +117,14 @@ def scrape_batch(urls: list[str]) -> list[str]:
                 status_code = item.get("metadata", {}).get("statusCode", 200)
                 path = save_scrape_result(url, md_content, status_code=status_code)
                 saved_paths.append(path)
-                print(f"✅ Saved {url} to {path}")
+                print(f"[SUCCESS] Saved {url} to {path}")
         else:
             print("WARNING: Unrecognized batch scrape response format.")
         
         return saved_paths
 
     except Exception as e:
-        print(f"❌ Batch scrape failed: {e}", file=sys.stderr)
+        print(f"[ERROR] Batch scrape failed: {e}", file=sys.stderr)
         return []
 
 
